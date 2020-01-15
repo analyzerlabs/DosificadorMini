@@ -6,7 +6,6 @@ RTC_DS1307 rtc;
 int state=0;
 char daysOfTheWeek[7][12] = {"Domingo","Lunes", "Martes", "Miercoles", 
                               "Jueves","Viernes", "Sabado"};
-
 int LedVerde = 15,LedAzul = 2,LedVerde2=5;
 int LedRojo = 18,LedAzul2 = 4,LedVerde3=19;
 void setup () {
@@ -21,8 +20,8 @@ void setup () {
   digitalWrite(27,HIGH);
   Serial.begin(115200);
   if (! rtc.begin()) {
-    Serial.println("Couldn't find RTC");
-    while (1);
+      Serial.println("Couldn't find RTC");
+      while (1);
   }
   getTimeDs1307();
   hora_aux = hora;
@@ -34,8 +33,8 @@ void setup () {
   digitalWrite(27,LOW);
   getTimeDs1307();
   if(minuto - minuto_aux == 2 && segundo_aux == segundo){
-            digitalWrite(27,HIGH);
-            break;
+          digitalWrite(27,HIGH);
+          break;
       }
   }
   digitalWrite(LedVerde,HIGH);
@@ -47,12 +46,13 @@ void setup () {
 void loop () {
     printDs1307Time();
     getTimeDs1307();
-    if(hora%24 == 13 && minuto == 30){
+    if(hora%24 == 0 && minuto == 45){
         dosificar(4000);
     }
 }
 int desvanecer=0;
 int j =1;
+
 void dosificar(int volumen){
     digitalWrite(LedAzul,HIGH);  
     digitalWrite(LedVerde3,HIGH);  
@@ -79,7 +79,6 @@ void dosificar(int volumen){
     digitalWrite(LedAzul,LOW);  
     digitalWrite(LedVerde3,LOW);  
 }
-
 
 void getTimeDs1307(){
     DateTime now = rtc.now();
